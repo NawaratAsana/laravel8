@@ -20,7 +20,7 @@ class StaffController extends Controller
         $search = $request->get('search');
         if (!empty($search)) {
             //กรณีมีข้อมูลที่ต้องการ search จะมีการใช้คำสั่ง where และ orWhere
-            $covid19s = Staff::where('name', 'LIKE', "%$search%")
+            $staffs = Staff::where('name', 'LIKE', "%$search%")
                 ->orWhere('age', 'LIKE', "%$search%")
                 ->orWhere('salary', 'LIKE', "%$search%")
                 ->orWhere('phone', 'LIKE', "%$search%");

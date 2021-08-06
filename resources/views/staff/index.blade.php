@@ -2,13 +2,13 @@
 @section('content')
 <h1>Staff</h1>
 <a href="{{ url('/staff/create') }}" class="btn btn-sm btn-success mr-4">New Record</a>
-<form action="{{ url('/staff') }}" method="GET" >
+<form action="{{ url('/staff') }}" method="GET">
     <input class="border border-2" name="search" id="search" value="{{ request('search') }}" />
-    <button class="btn btn-sm btn-secondary mr-4" type="submit" >Search</button>
+    <button class="btn btn-sm btn-secondary mr-4" type="submit">Search</button>
 </form>
 <table class="table table-sm table-bordered text-end" style="width:50%">
     <tr>
-      
+
         <th>Name</th>
         <th>Age</th>
         <th>Salary</th>

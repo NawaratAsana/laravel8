@@ -27,7 +27,7 @@ Route::get('/dashboard', function () {
 Route::get("/blog/{id}", function ($id) {
     return "<h1>This is blog page : {$id} </h1>";
 });
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 Route::get("/blog/{id}/edit", function ($id) {
     return "<h1>This is blog page : {$id} for edit</h1>";
@@ -72,10 +72,10 @@ Route::get("/gallery/ant", function () {
     $ant = "https://cdn3.movieweb.com/i/article/Oi0Q2edcVVhs4p1UivwyyseezFkHsq/1107:50/Ant-Man-3-Talks-Michael-Douglas-Update.jpg";
     return view("test/ant", compact("ant"));
 });
-Route::middleware(['auth','role:admin'])->group(function () {
-Route::get("/teacher", function () {
-    return view("teacher");
-});
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get("/teacher", function () {
+        return view("teacher");
+    });
 });
 
 Route::get("/student", function () {
@@ -90,37 +90,40 @@ use App\Http\Controllers\MyProfileController;
 
 Route::get("/myprofile/create", [MyProfileController::class, "create"]);
 Route::get("/myprofile/{id}/edit", [MyProfileController::class, "edit"]);
-Route::get("/myprofile/{id}", [ MyProfileController::class , "show" ]);
+Route::get("/myprofile/{id}", [MyProfileController::class, "show"]);
 
-Route::get( "/newgallery" , [ MyProfileController::class , "gallery" ] );
-Route::get( "/newgallery/ant" , [ MyProfileController::class , "ant" ] );
+Route::get("/newgallery", [MyProfileController::class, "gallery"]);
+Route::get("/newgallery/ant", [MyProfileController::class, "ant"]);
 
-Route::get( "/coronavirus" ,[ MyProfileController::class , "coronavirus" ] );
+Route::get("/coronavirus", [MyProfileController::class, "coronavirus"]);
 
 use App\Http\Controllers\Covid19Controller;
-Route::get("/covid19/create",[ Covid19Controller::class , "create" ]);
-Route::post("/covid19",[ Covid19Controller::class , "store" ]);
-Route::get('/covid19/{id}',[ Covid19Controller::class,'show' ]);
-Route::get("/covid19/{id}/edit", [ Covid19Controller::class , "edit" ]);
-Route::patch("/covid19/{id}", [ Covid19Controller::class , "update" ]);
-Route::get('/covid19', [ Covid19Controller::class,"index" ]);
-Route::delete('/covid19/{id}', [ Covid19Controller::class , 'destroy' ]);
+
+Route::get("/covid19/create", [Covid19Controller::class, "create"]);
+Route::post("/covid19", [Covid19Controller::class, "store"]);
+Route::get('/covid19/{id}', [Covid19Controller::class, 'show']);
+Route::get("/covid19/{id}/edit", [Covid19Controller::class, "edit"]);
+Route::patch("/covid19/{id}", [Covid19Controller::class, "update"]);
+Route::get('/covid19', [Covid19Controller::class, "index"]);
+Route::delete('/covid19/{id}', [Covid19Controller::class, 'destroy']);
 
 use App\Http\Controllers\StaffController;
-Route::get("/staff/create",[ StaffController::class , "create" ]);
-Route::get("/staff/{id}/edit", [ StaffController::class , "edit" ]);
-Route::get('/staff', [ StaffController::class,"index" ]);
-Route::get('/staff/{id}',[ StaffController::class,'show' ]);
-Route::post("/staff",[ StaffController::class , "store" ]);
-Route::patch("/staff/{id}", [ StaffController::class , "update" ]);
-Route::delete('/staff/{id}', [ StaffController::class , 'destroy' ]);
+
+Route::get("/staff/create", [StaffController::class, "create"]);
+Route::get("/staff/{id}/edit", [StaffController::class, "edit"]);
+Route::get('/staff', [StaffController::class, "index"]);
+Route::get('/staff/{id}', [StaffController::class, 'show']);
+Route::post("/staff", [StaffController::class, "store"]);
+Route::patch("/staff/{id}", [StaffController::class, "update"]);
+Route::delete('/staff/{id}', [StaffController::class, 'destroy']);
 
 use App\Http\Controllers\PostController;
+
 Route::resource('post', PostController::class);
 
-use App\Http\Controllers\ProfileController;  
-use App\Http\Controllers\UserController;  
-use App\Http\Controllers\VehicleController;  
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\VehicleController;
 
 Route::resource('profile', ProfileController::class);
 Route::resource('user', UserController::class);
@@ -129,11 +132,14 @@ Route::resource('vehicle', VehicleController::class);
 //Route::resource('profile', 'ProfileController');
 //Route::resource('user', 'UserController');
 //Route::resource('vehicle', 'VehicleController');
-use App\Http\Controllers\OrderController; 
-use App\Http\Controllers\PaymentController; 
-use App\Http\Controllers\OrderProductController; 
-use App\Http\Controllers\ProductController; 
-Route::resource('order', OrderController::class);
-Route::resource('payment', PaymentController::class);
-Route::resource('order-product', OrderProductController::class);
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\OrderProductController;
+use App\Http\Controllers\ProductController;
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('order', OrderController::class);
+    Route::resource('payment', PaymentController::class);
+    Route::resource('order-product', OrderProductController::class);
+});
 Route::resource('product', ProductController::class);
